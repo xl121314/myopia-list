@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>近视前期家庭干预清单 - 梁医生专业版 | 精简打印</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #eef3e8;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', Helvetica, 'Noto Sans', sans-serif;
+            padding: 20px 12px 48px;
+            color: #1e2f1c;
+        }
+
+        /* 主容器：移动优先，优雅卡片 */
+        .mobile-container {
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* 操作栏组合 (非截图区，功能按钮) */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: rgba(255,255,240,0.7);
+            backdrop-filter: blur(2px);
+            padding: 6px 12px;
+            border-radius: 48px;
+            justify-content: center;
+        }
+        .btn-action {
+            background: #2c6e2c;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-action:hover {
+            background: #1f541f;
+            transform: scale(0.97);
+        }
+        .btn-secondary {
+            background: #5a8f4c;
+        }
+        .btn-secondary:hover {
+            background: #3d6b30;
+        }
+
+        /* 主要截图区域 — 干净清单卡片 */
+        #mobileVersion {
+            background: #ffffff;
+            border-radius: 36px;
+            box-shadow: 0 20px 35px -12px rgba(0, 32, 0, 0.2);
+            overflow: hidden;
+            padding: 28px 22px 38px;
+            transition: all 0.2s;
+        }
+
+        /* 标题区 */
+        .header-badge {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .badge {
+            background: #eaf6e5;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2c6e2c;
+            letter-spacing: 0.5px;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin: 12px 0 6px;
+            color: #1f3b1c;
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+        }
+        .sub {
+            color: #4a6741;
+            font-size: 0.9rem;
+            border-left: 3px solid #8bc34a;
+            padding-left: 12px;
+            margin: 10px 0 4px;
+            background: #f9fff7;
+            border-radius: 12px;
+        }
+        .doctor-note {
+            background: #fef9e6;
+            padding: 12px 16px;
+            border-radius: 24px;
+            margin: 20px 0 16px;
+            font-size: 0.85rem;
+            color: #7a6700;
+            border-left: 4px solid #ffc107;
+        }
+
+        /* 进度条模块 */
+        .progress-section {
+            margin: 20px 0 18px;
+            background: #f2f7ef;
+            padding: 12px 16px;
+            border-radius: 32px;
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .progress-bar-bg {
+            background: #d4e2ce;
+            border-radius: 30px;
+            height: 12px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: #2c6e2c;
+            width: 0%;
+            height: 100%;
+            border-radius: 30px;
+            transition: width 0.25s ease;
+        }
+        .reset-check {
+            text-align: right;
+            margin-top: 8px;
+        }
+        .reset-link {
+            font-size: 0.7rem;
+            color: #7f8c6d;
+            background: none;
+            border: none;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* 干预分组 details 样式 (原生折叠增强) */
+        .intervention-group {
+            margin-bottom: 20px;
+            background: #ffffff;
+            border-radius: 28px;
+            border: 1px solid #e2f0da;
+            overflow: hidden;
+            transition: all 0.1s;
+        }
+        .group-summary {
+            background: #fafff7;
+            padding: 16px 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            transition: background 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+        .group-summary::-webkit-details-marker {
+            display: none;
+        }
+        .group-summary::before {
+            content: "📋";
+            font-size: 1.3rem;
+            transition: transform 0.2s;
+        }
+        details[open] .group-summary::before {
+            content: "📂";
+        }
+        .group-summary span {
+            flex: 1;
+        }
+        .group-badge {
+            background: #cfebc2;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            font-weight: normal;
+        }
+        .group-items {
+            padding: 8px 8px 12px 20px;
+            background: white;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 12px 12px 4px;
+            border-bottom: 1px solid #ecf7e6;
+            font-size: 0.92rem;
+        }
+        .check-item label {
+            flex: 1;
+            line-height: 1.4;
+            color: #2a3b25;
+            font-weight: 470;
+        }
+        .check-item input {
+            width: 22px;
+            height: 22px;
+            accent-color: #2c6e2c;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .check-item:hover {
+            background: #fafef7;
+            border-radius: 40px;
+        }
+        .footnote {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 28px;
+            color: #7b8a6f;
+            border-top: 1px dashed #d8e8cf;
+            padding-top: 18px;
+        }
+        .signature {
+            font-family: monospace;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        .small-tip {
+            background: #f0f7eb;
+            border-radius: 16px;
+            padding: 8px 14px;
+            margin: 6px 0 0 28px;
+            font-size: 0.75rem;
+            color: #42633b;
+        }
+
+        /* ========= A4 打印优化样式 ========= */
+        @media print {
+            .action-bar, .btn-group, .btn-action, .reset-link {
+                display: none !important;
+            }
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .mobile-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #mobileVersion {
+                box-shadow: none;
+                padding: 0.6cm 1cm 1.2cm;
+                border-radius: 0;
+                max-width: 100%;
+                background: white;
+            }
+            @page {
+                size: A4;
+                margin: 1.6cm 1.4cm;
+            }
+            .intervention-group {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #ddd;
+                margin-bottom: 16px;
+            }
+            .progress-section {
+                break-inside: avoid;
+                background: #f8faf5;
+            }
+            .check-item {
+                break-inside: avoid;
+            }
+            input[type="checkbox"] {
+                transform: scale(1);
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="mobile-container">
+    <!-- 简化按钮栏：仅保留打印和保存图片，移除折叠/重置按钮 -->
+    <div class="action-bar">
+        <div class="btn-group">
+            <button class="btn-action" id="printOnlyBtn">🖨️ 打印清单 (A4)</button>
+            <button class="btn-action btn-secondary" onclick="saveAsImage()">📸 保存为图片</button>
+        </div>
+    </div>
+
+    <!-- 核心清单主体：截图与打印区域 -->
+    <div id="mobileVersion">
+        <div class="header-badge">
+            <div class="badge">👁️‍🗨️ 中华近视防控共识 · 家庭版</div>
+            <h1>近视前期<br>家庭干预清单</h1>
+            <div class="sub">梁医生 · 专业行为处方 | 延缓远视储备消耗</div>
+        </div>
+
+        <div class="doctor-note">
+            💡 梁医生提示：近视前期（远视储备低于同龄下限，尚未近视）是防控黄金窗口！每日坚持干预措施可延缓眼轴增长。本清单根据循证医学及专家共识整理，完成一项打✔️，每周复盘。
+        </div>
+
+        <!-- 进度跟踪 -->
+        <div class="progress-section">
+            <div class="progress-stats">
+                <span>✅ 今日完成干预项</span>
+                <span id="completedCount">0</span><span> / <span id="totalCount">0</span></span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="reset-check">
+                <button class="reset-link" id="softResetBtn">🗑️ 清空所有勾选记录</button>
+            </div>
+        </div>
+
+        <!-- 分组清单：7大核心模块（details保持可折叠，提升日常使用） -->
+        <!-- 1. 户外光照与活动 -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>☀️ 户外活动与光照</span><span class="group-badge">每日必修</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🌳 每天累计户外时间 ≥ 2小时 (光照强度＞3000lux最佳，阴天也有效)</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🏃 利用碎片时间：上下学步行、课间出教室、傍晚活动</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🕶️ 避免阳光直射眼睛，但不要戴墨镜遮挡有效光照（夏季戴宽檐帽）</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>📱 户外期间不看电子屏幕，鼓励望远、球类运动(刺激多巴胺分泌)</label></div>
+            </div>
+        </details>
+
+        <!-- 2. 用眼行为规范 -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>📖 用眼行为与20-20-20法则</span><span class="group-badge">核心习惯</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>⏲️ 严格执行“20-20-20”法则：每20分钟看20英尺外20秒</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>📐 读写姿势“三个一”：眼离一尺，胸离一拳，笔离一寸</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>📱 非学习目的电子产品单次≤15分钟，全天≤1小时</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>👋 近距离用眼后远眺5分钟，设置番茄钟提醒休息</label></div>
+            </div>
+        </details>
+
+        <!-- 3. 视觉环境优化 -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>💡 居家光照与视觉环境</span><span class="group-badge">环境改造</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🛋️ 读写台灯+房间顶灯同时开启，避免单一光源阴影</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🌈 色温4000K左右，显色指数≥90，照度500~750Lux</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🖥️ 屏幕放置高度略低于视线，距离保持50cm以上</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🪞 避免眩光：书本不反光，窗户外无强烈阳光直射桌面</label></div>
+            </div>
+        </details>
+
+        <!-- 4. 营养与膳食补充 -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>🥑 营养护眼支持</span><span class="group-badge">食补优先</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🥬 每周深绿色蔬菜(菠菜/羽衣甘蓝/西兰花) ≥5次，补充叶黄素</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🐟 富含DHA的食物：三文鱼、沙丁鱼、核桃，每周2次</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🍊 维生素C+花青素：柑橘、蓝莓、紫薯，增强视网膜抗氧化力</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🥛 控制甜食/含糖饮料（高糖加剧巩膜重构），增加钙质摄入</label></div>
+                <div class="small-tip">✨ 研究提示：低升糖饮食与近视进展负相关，多摄入粗粮。</div>
+            </div>
+        </details>
+
+        <!-- 5. 医学监测与档案管理 -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>🩺 定期检查与眼轴监控</span><span class="group-badge">关键节点</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>📅 每6个月进行一次散瞳验光+眼轴长度测量（建立屈光档案）</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>📊 记录“远视储备值”及年眼轴增幅，年增长＜0.2mm为目标</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>👓 出现眯眼、凑近等症状立即就诊，勿盲目配镜</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>📋 检查前准备：停用低浓度阿托品需遵医嘱，避免干扰</label></div>
+            </div>
+        </details>
+
+        <!-- 6. 医学干预措施（医生指导下） -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>💊 进阶医学干预（需评估）</span><span class="group-badge">遵医嘱</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🧴 低浓度阿托品（0.01%~0.025%）—— 仅限眼科医生评估后使用</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>👁️ 多焦点软镜/角膜塑形镜适用于进展迅速者，须严格护理</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🔬 重复低强度红光治疗（需专业设备）—— 按适应症选择</label></div>
+                <div class="small-tip">⚠️ 任何药物/器械干预前必须完善眼部检查，不可自行购买！</div>
+            </div>
+        </details>
+
+        <!-- 7. 睡眠与昼夜节律 -->
+        <details class="intervention-group" open>
+            <summary class="group-summary"><span>😴 充足睡眠与生物钟</span><span class="group-badge">激素调节</span></summary>
+            <div class="group-items">
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🌙 小学生保证10小时，初中生9小时，高中生8小时睡眠</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🛌 睡前1小时禁用电子产品，避免蓝光抑制褪黑素</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>🌃 卧室完全黑暗，使用遮光窗帘，不开启小夜灯</label></div>
+                <div class="check-item"><input type="checkbox" class="interv-check"> <label>⏰ 保持规律就寝/起床，周末偏差不超过1小时</label></div>
+            </div>
+        </details>
+
+        <div class="footnote">
+            📌 基于近视管理白皮书（2024）及中华医学会眼科学分会共识<br>
+            梁医生提醒：持之以恒比强度更重要，每周回顾一次完成情况。<br>
+            <span class="signature">—— 梁医生团队 | 家庭眼健康守护 ——</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 获取所有复选框
+        const allChecks = document.querySelectorAll('.interv-check');
+        const totalSpan = document.getElementById('totalCount');
+        const completedSpan = document.getElementById('completedCount');
+        const progressFill = document.getElementById('progressFill');
+        const resetBtn = document.getElementById('softResetBtn');
+        const printBtn = document.getElementById('printOnlyBtn');
+
+        // 更新进度统计
+        function updateProgress() {
+            const total = allChecks.length;
+            let completed = 0;
+            allChecks.forEach(cb => {
+                if (cb.checked) completed++;
+            });
+            if (totalSpan) totalSpan.innerText = total;
+            completedSpan.innerText = completed;
+            const percent = total === 0 ? 0 : (completed / total) * 100;
+            progressFill.style.width = percent + '%';
+            if (percent >= 80) progressFill.style.backgroundColor = '#4caf50';
+            else if (percent >= 40) progressFill.style.backgroundColor = '#7cb342';
+            else progressFill.style.backgroundColor = '#2c6e2c';
+        }
+
+        // 重置所有勾选
+        function resetAllChecks() {
+            allChecks.forEach(cb => cb.checked = false);
+            updateProgress();
+        }
+
+        // 监听复选框变化
+        allChecks.forEach(cb => {
+            cb.addEventListener('change', updateProgress);
+        });
+
+        // 重置按钮事件 (仅保留清空勾选，符合部分家长记录习惯)
+        if (resetBtn) resetBtn.addEventListener('click', resetAllChecks);
+        
+        // 初始化进度显示
+        updateProgress();
+
+        // ========= 打印功能：A4优化 + 自动展开所有分组以保证打印完整 =========
+        if (printBtn) {
+            printBtn.addEventListener('click', function() {
+                // 获取所有details分组，保存当前展开状态，临时全部展开确保打印内容完整
+                const allDetails = Array.from(document.querySelectorAll('#mobileVersion .intervention-group'));
+                const originalStates = allDetails.map(d => d.hasAttribute('open'));
+                allDetails.forEach(detail => {
+                    detail.setAttribute('open', 'true');
+                });
+                // 调用浏览器打印 (已通过@media print适配A4)
+                window.print();
+                // 打印对话框关闭后延迟恢复折叠状态，保持之前的使用习惯
+                setTimeout(() => {
+                    allDetails.forEach((detail, idx) => {
+                        if (!originalStates[idx]) {
+                            detail.removeAttribute('open');
+                        } else {
+                            detail.setAttribute('open', 'true');
+                        }
+                    });
+                }, 300);
+            });
+        }
+
+        // ========= 保存图片功能（保持截图完整性） =========
+        window.saveAsImage = function() {
+            const element = document.getElementById('mobileVersion');
+            if (!element) return;
+            const allDetails = Array.from(document.querySelectorAll('#mobileVersion .intervention-group'));
+            const originalStates = allDetails.map(detail => detail.hasAttribute('open'));
+            // 展开所有分组保证截图显示所有干预项
+            allDetails.forEach(detail => {
+                detail.setAttribute('open', 'true');
+            });
+            html2canvas(element, {
+                scale: 2.8,
+                backgroundColor: '#ffffff',
+                logging: false,
+                useCORS: false
+            }).then(canvas => {
+                // 恢复原来的折叠状态
+                allDetails.forEach((detail, idx) => {
+                    if (!originalStates[idx]) detail.removeAttribute('open');
+                    else detail.setAttribute('open', 'true');
+                });
+                const link = document.createElement('a');
+                link.download = '近视干预清单_梁医生.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(error => {
+                console.error('截图生成失败: ', error);
+                // 发生错误时同样恢复状态
+                allDetails.forEach((detail, idx) => {
+                    if (!originalStates[idx]) detail.removeAttribute('open');
+                    else detail.setAttribute('open', 'true');
+                });
+                alert('保存图片失败，可刷新页面后重试');
+            });
+        };
+    })();
+</script>
+</body>
+</html>
